@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="es">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Semana Ing. UQroo</title>
+
+		<meta name="description" content="Semana Ing. UQroo">
+		<meta name="author" content="Julio Ramírez-Pacheco">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+		<link rel="stylesheet" href="css/user.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="myLogo" style="background: url(img/logo.png);
+												position: absolute;
+												bottom: 100px;
+												right: 100px;
+												width: 100px;
+												height: 100px;
+												background-size: cover;">
+		</div>
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Entropías generalizadas</h1>
+					<h3>Para el análisis de señales $1/f^{\alpha}$</h3>
+					<p>
+						<small>Dr. Julio César Ramírez-Pacheco </small>
+					</p>
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Contenido</h2>
+					<ul>
+						<li class="fragment">Introducción, motivación y objetivos.</li>
+						<li class="fragment">Procesos con invarianza en escala.</li>
+						<li class="fragment">Análisis wavelet de procesos $1/f^{\alpha}$.</li>
+						<li class="fragment">Entropias extensivas y no extensivas wavelet.</li>
+						<li class="fragment">La entropia Abe wavelet para procesos $1/f^{\alpha}$.</li>
+						<li class="fragment">Aplicaciones y conclusiones.</li>
+					</ul>
+				</section>
+
+				<section data-transition="zoom">
+					  <h2>Introducción y motivación</h2>
+			      <ul>
+			      	<li class="fragment">Los procesos con invarianza en escala o procesos $1/f^{\alpha}$ aparecen en diversos campos de la ciencia.</li>
+			      	<li class="fragment">Secuencias de DNA, tráfico de redes, flujos turbulentos, tiempo de inter-latido, estado de ánimo, etc.</li>
+			      	<li class="fragment">Una forma de caracterizar estos procesos es mediante el valor del parámetro $\alpha$.</li>
+			      	<li class="fragment">El proceso de estimación no es trivial y se requieren técnicas más elaboradas cuando existen cambios de nivel, no-estacionariedades, etc.</li>
+			      </ul>
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Introducción y Motivación: Cont.</h2>
+					<ul>
+						<li class="fragment">Basado en lo anterior, el objetivo de la presente plática es mostrar el potencial de las entropias wavelet para mejorar el proceso de estimación</li>
+						<li class="fragment">De igual forma, las propiedades de estas entropias sugieren otras aplicaciones para el análisis de procesos $1/f^{\alpha}$.</li>
+						<li class="fragment">La presente plática se centra en la familia de entropias Abe wavelet.</li>
+					</ul>
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Ejemplo: cancer de riñon</h2>
+					<img src="img/lung.jpg" alt="Lung cancer">
+
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Ejemplo: Series de la caminata</h2>
+					<img style= "width:75%;" src="img/gait.jpg" alt="Lung cancer">
+
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Objetivos</h2>
+					<ul>
+						<li class="fragment">Presentar las características de las entropias wavelet para procesos $1/f^{\alpha}$, en particular la entropia Abe wavelet</li>
+						<li class="fragment">Obtener los planos de información (entropias versus $\alpha$) de la entropia Abe para procesos $1/f^{\alpha}$</li>
+						<li class="fragment">Mostrar las ventajas de utilizar una energía wavelet relativa (RWE) ponderada y su efecto en los planos de información.</li>
+					</ul>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section data-transition="zoom">
+					<section>
+				      <h2>Procesos con invarianza en escala</h2>
+							<div class="fragment">
+										<div style="font-family: 'Pacifico';" class="def-block">
+										Definición
+										</div>
+										<div class="def-block-eq">
+										<p style="padding:0; margin:5px;">
+											Sea $(X_t)_{t \in \mathbb{R}}$ una señal aleatoria de valores reales, se dice que $X_t$ es un proceso
+											con invarianza en escala (también llamado proceso $1/f^{\alpha}$) de índice $\alpha$ si su densidad
+											espectral de potencia (PSD) $\{\Gamma(\nu), \nu \in (A,B)\}$ satisface:
+											<br><br>
+											$$
+											\Gamma_{X}(\nu) \sim c_\gamma |\nu|^{-\alpha}
+											$$
+									</div>
+						  </div>
+							<p class="fragment" style="text-align:left;">Dependiendo de $A$, $B$ y $\alpha$, se pueden obtener varios procesos conocidos.</p>
+					</section>
+					<section>
+					<h2>Procesos FGN</h2>
+					<div class="w3-content w3-display-container" style="max-width:100%">
+               <img class="mySlides" src="img/fgn020.jpg" style="width:100%">
+               <img class="mySlides" src="img/fgn040.jpg" style="width:100%">
+               <img class="mySlides" src="img/fgn060.jpg" style="width:100%">
+							 <img class="mySlides" src="img/fgn080.jpg" style="width:100%">
+               <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+              <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+                 <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+                 <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                 <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                 <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+								 <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+             </div>
+          </div>
+
+					</section>
+					</section>  <!--  End of nested slides  -->
+
+					<section>
+						<h2>Procesos FBM</h2>
+						<img src="img/fbmall.jpg" alt="">
+
+					</section>
+
+
+
+				<section data-transition="zoom">
+					<h2>Análisis wavelet de señales $1/f$</h2>
+					<div class="fragment">
+								<div style="font-family: 'Pacifico';" class="def-block">
+								Definición
+								</div>
+								<div class="def-block-eq">
+								<p style="padding:0; margin:5px;">
+									Sea $(X_t)_{t \in \mathbb{R}}$ un proceso aleatorio de valores reales, entonces su transformada discreta wavelet (DWT), $d_X(j,k)$
+									está dada por:
+									$$
+										d_X(j,k) = 2^{-j/2} \int_{\mathbb{R}}{X_t \psi(2^{-j}t-k) dt}
+									$$
+							</div>
+					</div>
+					<p class="fragment" style="text-align:left;">Para procesos fractales se tiene:
+            $$\mathbb{E}|d_x(j.k)|^2 = 2c_H^2 2^{-j \alpha} \int_{0}^{\infty}{\nu^{\alpha} |\Psi(\nu)|^2} d\nu$$ </p>
+
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Análisis wavelet de señales: Cont.</h2>
+					<ul>
+						<li class="fragment">Utilizando el concepto de energía promedio dado por:
+						$$ \mathcal{E}_j = \frac{1}{N_j}\sum_{k}{\mathbb{E}_j|d_x(j,k)|^2} = \mathbb{E}|d_X(j,k)|^2$$</li>
+						<li class="fragment">Finalmente, la energía wavelet relativa (RWE), que representa un función de probabilidad está dada por:
+						$$
+						p_j = \frac{\mathcal{E}_j}{\mathcal{E}_{tot}} = 2^{(j-1)\alpha} \frac{1-2^{\alpha}}{1-2^{\alpha N}}
+					  $$</li>
+					</ul>
+				</section>
+				<section data-transition="zoom">
+					<h2>Ejemplo: wavelets</h2>
+					<img style="width:100%;" src="img/wavelet1.jpg" alt="Wavelet">
+				</section>
+				<section data-transition="zoom">
+					<h2>Ejemplo: wavelets</h2>
+					<img style="width:100%;" src="img/wavelet2.jpg" alt="Wavelet">
+				</section>
+
+
+				<section data-transition="zoom">
+				<h2>Entropia wavelet extensiva</h2>
+
+	      	<p class="fragment" style="text-align:left;">Usando la formula de Shannon, la entropia wavelet resulta en:
+					$$
+					\mathcal{H}_S (p_j) = \frac{1}{\log_2(N)} \left\{ \frac{\alpha}{1-2^{-\alpha}}-\frac{\alpha N}{1-2^{-\alpha N}} - log_2(\frac{1-2^{\alpha}}{1-2^{\alpha N}})\right\}
+				  $$</p>
+	      	<p class="fragment" style="text-align:left;">Renyi:
+					$$
+					\mathcal{H}_R (p_j) = \frac{q}{q-1} \left\{ \log2(\frac{1-2^{\alpha}}{1-2^{\alpha N}})-\frac{1}{q}\log_2(\frac{1-2^{\alpha q N}}{1-2^{\alpha q}})\right\}
+					$$
+				</p>
+
+				</section>
+
+				<section data-transition="zoom">
+        <h2>Entropia wavelet</h2>
+				<img style="width:68%;" src="img/shanonPlane.jpg" alt="Wavelet entropy plane">
+				</section>
+
+
+
+				<section data-transition="zoom">
+				<h2>Entropia wavelet no-extensiva</h2>
+
+	      	<p class="fragment" style="text-align:left;">La entropia wavelet de Tsallis está dada por:
+					$$
+					\mathcal{H}_q^T (p_j) = \frac{1}{1-N^{1-q}} \left\{ 1-\left(\frac{1-2^{\alpha}}{1-2^{\alpha N}}\right)^q\left(\frac{1-2^{\alpha qN}}{1-2^{\alpha q}}\right)\right\}
+					$$</p>
+	      	<p class="fragment" style="text-align:left;">La entropia wavelet $(q,q')$:
+					$$
+					\mathcal{H}_{(q,q')}(p_j) = \mathcal{H}_q^T(p_j)\frac{1-N^{1-q}}{N^{1-q}-N^{1-q'}}- \mathcal{H}_q^T(p_j)\frac{1-N^{1-q'}}{N^{1-q}-N^{1-q'}}
+					$$
+				</p>
+
+				</section>
+
+				<section data-transition="zoom">
+									<section>
+					        <h2>Wavelet de Tsallis, $q=8$</h2>
+									<img style="width:68%;" src="img/tsallisPlane.jpg" alt="Wavelet q-entropy plane">
+									</section>
+									<section>
+					        <h2>Wavelet de Tsallis, $q=3$</h2>
+									<img style="width:68%;" src="img/tsallisPlane3.jpg" alt="Wavelet q-entropy plane">
+									</section>
+									<section>
+					        <h2>Wavelet de Tsallis, $q=-0.1$</h2>
+									<img style="width:68%;" src="img/tsallisPlaneM01.jpg" alt="Wavelet q-entropy plane">
+									</section>
+			  </section>
+
+				<section data-transition="zoom">
+					<h2 class="fragment">Entropias wavelet de un parámetro.</h2>
+					<ul>
+						<li class="fragment">Útiles para analizar procesos con interacciones de largo plazo, sistemas no-lineales, procesos fractales, etc.</li>
+						<li class="fragment">Utilizado para el análisis de series temporales en su versión en el dominio del tiempo.</li>
+						<li class="fragment">En su versión wavelet se utiliza para detectar cambios de nivel, señales fractales estacionarias y no estacionarias, clasificación de señales cerebrales MRI, detección de insuficiencia caradiaca congestiva, etc.</li>
+					</ul>
+				</section>
+
+				<section data-transition="zoom">
+									<section>
+					        <h2>Wavelet $(q,q')$, $q=13$</h2>
+									<img style="width:68%;" src="img/qqprime2d.jpg" alt="Wavelet qq-entropy plane">
+									</section>
+									<section>
+					        <h2>Wavelet $(q,q')$, $q=7$</h2>
+									<img style="width:68%;" src="img/qqprime2d_2.jpg" alt="Wavelet qq-entropy plane">
+									</section>
+			  </section>
+
+
+
+				<section data-transition="zoom">
+					<h2 class="fragment">Entropias de dos parámetros</h2>
+					<ul>
+						<li class="fragment">Proveen mayor flexibilidad en el análisis de señales.</li>
+						<li class="fragment">Los rangos de variación de las entropias son más extrechas, lo que permiten distinguir diversos procesos fractales.</li>
+						<li class="fragment">Con el empleo de una RWE ponderada, es decir,
+						$$
+						\hat{\mathcal{E}}_j = \sum_{k}{\mathbb{E}|d_x(j,k)|^2} = N_j\mathbb{E}|d_x(j,k)|^2
+					  $$
+            y $N_j = 2^{jr}$, se pueden analizar más procesos.
+						</li>
+					</ul>
+				</section>
+
+				<section data-transition="zoom">
+					<h2>Efecto del valor $r$</h2>
+					<img src="img/ridgeline.jpg" style= "width:80%;" alt="" class="fragment">
+				</section>
+				<section data-transition="zoom">
+					<h2>Aplicaciones y conclusiones</h2>
+					<img style = "width:80%" src="img/detection.jpg" alt="Detection of stat/nostat">
+				</section>
+				<section data-transition="zoom">
+					<h2>Aplicaciones y conclusiones: Cont.</h2>
+					<img style="width:80%;" src="img/strucchange.jpg" alt="Structural changes">
+				</section>
+				<section data-transition="zoom">
+					<h2>Aplicaciones y conclusiones</h2>
+					<ul>
+						<li class="fragment">La entropias definidas en el dominio tiempo-escala permiten analizar de manera eficiente procesos con invarianza en escala.</li>
+						<li class="fragment">Mediante el uso de entropias no-extensivas en el dominio wavelet se pueden clasificar señales fractales en casi cualquier rango del parámetro $\alpha$</li>
+						<li class="fragment">Además las entropias definidas en el dominio tiempo-escala son rápidas aún en series temporales que consisten en millones de observaciones.</li>
+					</ul>
+				</section>
+				<section>
+
+					<h2>¿Preguntas?</h2>
+
+				</section>
+
+
+
+
+
+
+
+
+
+
+			</div>
+
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				math: {
+					//	mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+
+				menu: {
+		// Specifies which side of the presentation the menu will
+		// be shown. Use 'left' or 'right'.
+		side: 'left',
+
+		// Add slide numbers to the titles in the slide list.
+		// Use 'true' or format string (same as reveal.js slide numbers)
+		numbers: false,
+
+		// Specifies which slide elements will be used for generating
+		// the slide titles in the menu. The default selects the first
+		// heading element found in the slide, but you can specify any
+		// valid css selector and the text from the first matching
+		// element will be used.
+		// Note: that a section data-menu-title attribute or an element
+		// with a menu-title class will take precedence over this option
+		titleSelector: 'h1, h2, h3, h4, h5, h6',
+
+		// If slides do not have a matching title, attempt to use the
+		// start of the text content as the title instead
+		useTextContentForMissingTitles: false,
+
+		// Hide slides from the menu that do not have a title.
+		// Set to 'true' to only list slides with titles.
+		hideMissingTitles: false,
+
+		// Adds markers to the slide titles to indicate the
+		// progress through the presentation. Set to 'false'
+		// to hide the markers.
+		markers: true,
+
+		// Specify custom panels to be included in the menu, by
+		// providing an array of objects with 'title', 'icon'
+		// properties, and either a 'src' or 'content' property.
+		custom: false,
+
+		// Specifies the themes that will be available in the themes
+		// menu panel. Set to 'true' to show the themes menu panel
+		// with the default themes list. Alternatively, provide an
+		// array to specify the themes to make available in the
+		// themes menu panel, for example...
+		// [
+		//     { name: 'Black', theme: 'css/theme/black.css' },
+		//     { name: 'White', theme: 'css/theme/white.css' },
+		//     { name: 'League', theme: 'css/theme/league.css' }
+		// ]
+		themes: false,
+
+		// Specifies the path to the default theme files. If your
+		// presentation uses a different path to the standard reveal
+		// layout then you need to provide this option, but only
+		// when 'themes' is set to 'true'. If you provide your own
+		// list of themes or 'themes' is set to 'false' the
+		// 'themesPath' option is ignored.
+		themesPath: 'css/theme/',
+
+		// Specifies if the transitions menu panel will be shown.
+		// Set to 'true' to show the transitions menu panel with
+		// the default transitions list. Alternatively, provide an
+		// array to specify the transitions to make available in
+		// the transitions panel, for example...
+		// ['None', 'Fade', 'Slide']
+		transitions: false,
+
+		// Adds a menu button to the slides to open the menu panel.
+		// Set to 'false' to hide the button.
+		openButton: true,
+
+		// If 'true' allows the slide number in the presentation to
+		// open the menu panel. The reveal.js slideNumber option must
+		// be displayed for this to take effect
+		openSlideNumber: false,
+
+		// If true allows the user to open and navigate the menu using
+		// the keyboard. Standard keyboard interaction with reveal
+		// will be disabled while the menu is open.
+		keyboard: true,
+
+		// Normally the menu will close on user actions such as
+		// selecting a menu item, or clicking the presentation area.
+		// If 'true', the sticky option will leave the menu open
+		// until it is explicitly closed, that is, using the close
+		// button or pressing the ESC or m key (when the keyboard
+		// interaction option is enabled).
+		sticky: false,
+
+		// If 'true' standard menu items will be automatically opened
+		// when navigating using the keyboard. Note: this only takes
+		// effect when both the 'keyboard' and 'sticky' options are enabled.
+		autoOpen: true,
+
+		// If 'true' the menu will not be created until it is explicitly
+		// requested by calling RevealMenu.init(). Note this will delay
+		// the creation of all menu panels, including custom panels, and
+		// the menu button.
+		delayInit: false,
+
+		// If 'true' the menu will be shown when the menu is initialised.
+		openOnInit: false,
+
+		// By default the menu will load it's own font-awesome library
+		// icons. If your presentation needs to load a different
+		// font-awesome library the 'loadIcons' option can be set to false
+		// and the menu will not attempt to load the font-awesome library.
+		loadIcons: true
+	},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/math/math.js', async: true },
+					{src: 'plugin/menu/menu.js'},
+					//{ src: 'plugin/katex/katex.js', async: true},
+					//{ src: '../math-katex/math-katex.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			// JulioCRDev   slideshow
+			var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-white", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-white";
+}
+
+
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 2000);
+}
+
+		</script>
+
+	</body>
+</html>
